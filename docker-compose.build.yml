@@ -1,0 +1,278 @@
+version: "3.8"
+  
+services:
+  tars-develop:
+    image: lsqtzj/tars-develop:latest
+    build:
+      context: ./
+      dockerfile: docker/develop/Dockerfile
+    restart: always
+    container_name: tars-develop
+    hostname: tars-develop
+    networks:
+      network:
+        ipv4_address: 7.1.0.10
+    environment:
+      TZ: Europe/Rome #Asia/Shanghai 时区
+      TARS_BENCHMARK: True # 编译安装TARS_BENCHMARK
+      WEBHOST: "http://7.1.0.3:3000"
+      TARS_TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhZG1pbiIsImlhdCI6MTY0MzgyMTE3MSwiZXhwIjoxNzM4NDI5MTcxfQ.oDR_4cw1IaXD2W2_FVi2DjsnZHvlk8KLLRVKdUkv1xk
+      ADMINSIP: "7.1.0.20"
+      NODEIP: "7.1.0.21"
+      TarsGateway: True # 编译安装TarsGateway
+      GATEWAY_SERVER_IP: 7.1.0.9
+      MYSQL_HOST: 7.1.0.2
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_USER: root
+      MYSQL_PORT: 3306
+      DCACHE: True # 编译安装DCACHE，第一次开机需要一些时间
+      DCACHE_MYSQL_IP: 7.1.0.2
+      DCACHE_MYSQL_PORT: 3306
+      DCACHE_MYSQL_USER: root
+      DCACHE_MYSQL_PASSWORD: 123456
+      DCACHE_NODE_IP: 7.1.0.4
+    volumes:
+      - ./develop:/develop
+      - ./data/install:/install
+    extra_hosts:
+      - "tars-develop:7.1.0.10"
+      - "tars-mysql:7.1.0.2"
+      - "tars-framework:7.1.0.3"
+      - "tars-framework-slave:7.1.0.4"
+      - "tars-node:7.1.0.5"
+      - "tars-benchmark-admin-server:7.1.0.20"
+      - "tars-benchmark-node-server:7.1.0.21"
+      - "tars-gateway-server:7.1.0.9"
+    depends_on:
+      - tars-dcache-node
+      - tars-node
+      - tars-benchmark-node-server
+      - tars-benchmark-admin-server
+
+  tars-mysql:
+    image: lsqtzj/openeuler_mysql:8.0
+    restart: always
+    container_name: tars-mysql
+    hostname: tars-mysql
+    volumes:
+      - ./data/tars-mysql:/var/lib/mysql
+    privileged: true
+    ports:
+      - 3306:3306
+    networks:
+      network:
+        ipv4_address: 7.1.0.2
+    environment:
+      TZ: Europe/Rome #Asia/Shanghai 时区
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_ROOT_HOST: '%'
+    command: --skip_ssl --default-authentication-plugin=mysql_native_password #--lower_case_table_names=0 --socket=/tmp/mysql.sock --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    extra_hosts:
+      - "tars-develop:7.1.0.10"
+      - "tars-mysql:7.1.0.2"
+      - "tars-framework:7.1.0.3"
+      - "tars-framework-slave:7.1.0.4"
+      - "tars-node:7.1.0.5"
+      - "tars-benchmark-admin-server:7.1.0.20"
+      - "tars-benchmark-node-server:7.1.0.21"
+      - "tars-gateway-server:7.1.0.9"
+
+  tars-framework:    
+    image: lsqtzj/openeuler_tars_framework:latest
+    build:
+      context: ./
+      dockerfile: docker/framework/Dockerfile
+    restart: always
+    container_name: tars-framework
+    hostname: tars-framework
+    ports:
+      - 3000-3099:3000-3099
+    networks:
+      network:
+        ipv4_address: 7.1.0.3
+    volumes:
+      - ./data/tars-framework:/data/tars
+    environment:
+      TZ: Europe/Rome #Asia/Shanghai 时区
+      MYSQL_HOST: 7.1.0.2
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_USER: root
+      MYSQL_PORT: 3306
+      REBUILD: "false"
+      INET: eth0
+      SLAVE: "false"
+    extra_hosts:
+      - "tars-develop:7.1.0.10"
+      - "tars-mysql:7.1.0.2"
+      - "tars-framework:7.1.0.3"
+      - "tars-framework-slave:7.1.0.4"
+      - "tars-node:7.1.0.5"
+      - "tars-benchmark-admin-server:7.1.0.20"
+      - "tars-benchmark-node-server:7.1.0.21"
+      - "tars-gateway-server:7.1.0.9"
+    depends_on:
+      - tars-mysql   
+
+  tars-framework-slave:
+    image: lsqtzj/openeuler_tars_framework:latest
+    build:
+      context: ./
+      dockerfile: docker/framework/Dockerfile
+    restart: always
+    container_name: tars-framework-slave
+    hostname: tars-framework-slave
+    networks:
+      network:
+        ipv4_address: 7.1.0.4
+    ports:
+      - 4000-4099:4000-4099
+    volumes:
+      - ./data/tars-framework-slave:/data/tars
+    environment:
+      TZ: Europe/Rome #Asia/Shanghai 时区
+      MYSQL_HOST: 7.1.0.2
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_USER: root
+      MYSQL_PORT: 3306
+      REBUILD: "false"
+      INET: eth0
+      SLAVE: "true" 
+    extra_hosts:
+      - "tars-develop:7.1.0.10"
+      - "tars-mysql:7.1.0.2"
+      - "tars-framework:7.1.0.3"
+      - "tars-framework-slave:7.1.0.4"
+      - "tars-node:7.1.0.5"
+      - "tars-benchmark-admin-server:7.1.0.20"
+      - "tars-benchmark-node-server:7.1.0.21"
+      - "tars-gateway-server:7.1.0.9"
+    depends_on:
+      - tars-framework
+
+  tars-node:
+    image: lsqtzj/openeuler_tars_node:latest
+    build:
+      context: ./
+      dockerfile: docker/node/full/Dockerfile
+    restart: always
+    container_name: tars-node
+    hostname: tars-node
+    networks:
+      network:
+        ipv4_address: 7.1.0.5
+    ports:
+      - 5000-5099:5000-5099
+    volumes:
+      - ./data/tars-node:/data/tars
+    environment:
+      TZ: Europe/Rome #Asia/Shanghai 时区
+      INET: eth0
+      WEB_HOST: "http://tars-framework:3000"
+    extra_hosts:
+      - "tars-develop:7.1.0.10"
+      - "tars-mysql:7.1.0.2"
+      - "tars-framework:7.1.0.3"
+      - "tars-framework-slave:7.1.0.4"
+      - "tars-node:7.1.0.5"
+      - "tars-benchmark-admin-server:7.1.0.20"
+      - "tars-benchmark-node-server:7.1.0.21"
+      - "tars-gateway-server:7.1.0.9"
+    depends_on:
+      - tars-framework
+
+  tars-gateway-server:
+    image: lsqtzj/openeuler_tars_node:latest
+    build:
+      context: ./
+      dockerfile: docker/node/full/Dockerfile
+    restart: always
+    container_name: tars-gateway-server
+    hostname: tars-gateway-server
+    networks:
+      network:
+        ipv4_address: 7.1.0.9
+    ports:
+      - 8200:8200
+    volumes:
+      - ./data/tars-gateway-server:/data/tars
+    environment:
+      TZ: Europe/Rome #Asia/Shanghai 时区
+      INET: eth0
+      WEB_HOST: "http://tars-framework:3000"
+    extra_hosts:
+      - "tars-develop:7.1.0.10"
+      - "tars-mysql:7.1.0.2"
+      - "tars-framework:7.1.0.3"
+      - "tars-framework-slave:7.1.0.4"
+      - "tars-node:7.1.0.5"
+      - "tars-benchmark-admin-server:7.1.0.20"
+      - "tars-benchmark-node-server:7.1.0.21"
+      - "tars-gateway-server:7.1.0.9"
+    depends_on:
+      - tars-framework
+
+  tars-benchmark-admin-server:
+    image: lsqtzj/openeuler_tars_node:latest
+    build:
+      context: ./
+      dockerfile: docker/node/full/Dockerfile
+    restart: always
+    container_name: tars-benchmark-admin-server
+    hostname: tars-benchmark-admin-server
+    networks:
+      network:
+        ipv4_address: 7.1.0.20
+    volumes:
+      - ./data/tars-benchmark-admin-server:/data/tars
+    environment:
+      TZ: Europe/Rome #Asia/Shanghai 时区
+      INET: eth0
+      WEB_HOST: "http://tars-framework:3000"
+    extra_hosts:
+      - "tars-develop:7.1.0.10"
+      - "tars-mysql:7.1.0.2"
+      - "tars-framework:7.1.0.3"
+      - "tars-framework-slave:7.1.0.4"
+      - "tars-node:7.1.0.5"
+      - "tars-benchmark-admin-server:7.1.0.20"
+      - "tars-benchmark-node-server:7.1.0.21"
+      - "tars-gateway-server:7.1.0.9"
+    depends_on:
+      - tars-framework
+
+  tars-benchmark-node-server:
+    image: lsqtzj/openeuler_tars_node:latest
+    build:
+      context: ./
+      dockerfile: docker/node/full/Dockerfile
+    restart: always
+    container_name: tars-benchmark-node-server
+    hostname: tars-benchmark-node-server
+    networks:
+      network:
+        ipv4_address: 7.1.0.21
+    volumes:
+      - ./data/tars-benchmark-node-server:/data/tars
+    environment:
+      TZ: Europe/Rome #Asia/Shanghai 时区
+      INET: eth0
+      WEB_HOST: "http://tars-framework:3000"
+    extra_hosts:
+      - "tars-develop:7.1.0.10"
+      - "tars-mysql:7.1.0.2"
+      - "tars-framework:7.1.0.3"
+      - "tars-framework-slave:7.1.0.4"
+      - "tars-node:7.1.0.5"
+      - "tars-benchmark-admin-server:7.1.0.20"
+      - "tars-benchmark-node-server:7.1.0.21"
+      - "tars-gateway-server:7.1.0.9"
+    depends_on:
+      - tars-framework
+
+networks:
+  network:    
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 7.1.0.0/16
+          gateway: 7.1.0.1

@@ -1,0 +1,1 @@
+docker build -t lsqtzj/openeuler_tars_node:cpp -f Dockerfile ../../../

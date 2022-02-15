@@ -1,0 +1,26 @@
+FROM lsqtzj/openeuler_python:3.9.10 
+WORKDIR /develop
+
+RUN yum update -y
+RUN yum -y install cmake libuuid-devel openssl openssl-devel apr-devel apr-util-devel \
+    curl-devel wget tar gdb.x86_64 make gcc gcc-c++ flex diffutils expat-devel autoconf automake libtool libnsl \
+    git python3 python3-pip bison maven glibc-devel \
+    which psmisc ncurses-devel zlib-devel vim rpm-build
+
+RUN yum -y install mysql mysql-devel mysql-common
+
+# 编译安装 Gcc 8.5.0
+# #RUN wget https://github.com/gcc-mirror/gcc/archive/refs/tags/releases/gcc-8.5.0.tar.gz
+# RUN tar -xf gcc-8.5.0.tar.gz
+# RUN cd gcc-releases-gcc-8.5.0 && ./contrib/download_prerequisites 
+# RUN cd gcc-releases-gcc-8.5.0 && ./configure --prefix=/usr -enable-checking=release -enable-languages=c,c++ -disable-multilib && make -j4 && make install
+# RUN git config --global --unset http.proxy && \
+#     git config --global --unset https.proxy
+RUN git clone https://github.com/TarsCloud/TarsFramework.git --recursive && \
+    cd TarsFramework && git submodule update --remote --recursive && \
+    cd build && cmake .. && make -j4 && make install
+
+ENV PATH=$PATH:/usr/local/tars/cpp/script
+
+# docker run -tid --name openeuler_develop   --privileged=true lsqtzj/openeuler_tars_develop /sbin/init
+# docker exec -it openeuler_develop /bin/bash
