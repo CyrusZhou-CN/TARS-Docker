@@ -83,6 +83,7 @@ services:
       context: ./
       dockerfile: docker/framework/Dockerfile
     restart: always
+    ipc: host
     container_name: tars-framework
     hostname: tars-framework
     ports:
@@ -119,6 +120,7 @@ services:
       context: ./
       dockerfile: docker/framework/Dockerfile
     restart: always
+    ipc: host
     container_name: tars-framework-slave
     hostname: tars-framework-slave
     networks:
@@ -155,6 +157,7 @@ services:
       context: ./
       dockerfile: docker/node/full/Dockerfile
     restart: always
+    ipc: host
     container_name: tars-node
     hostname: tars-node
     networks:
@@ -186,6 +189,7 @@ services:
       context: ./
       dockerfile: docker/node/full/Dockerfile
     restart: always
+    ipc: host
     container_name: tars-gateway-server
     hostname: tars-gateway-server
     networks:
@@ -217,6 +221,7 @@ services:
       context: ./
       dockerfile: docker/node/full/Dockerfile
     restart: always
+    ipc: host
     container_name: tars-benchmark-admin-server
     hostname: tars-benchmark-admin-server
     networks:
@@ -246,6 +251,7 @@ services:
       context: ./
       dockerfile: docker/node/full/Dockerfile
     restart: always
+    ipc: host
     container_name: tars-benchmark-node-server
     hostname: tars-benchmark-node-server
     networks:
