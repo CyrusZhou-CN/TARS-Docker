@@ -98,7 +98,7 @@ function setup_benchmark() {
                         fi
                         cd /develop
                         if [ ! -d "/develop/TarsBenchmark" ];then
-                                git clone https://github.com/TarsCloud/TarsBenchmark.git                
+                                git clone https://github.com/lsqtzj/TarsBenchmark.git                
                         else
                                 cd /develop/TarsBenchmark
                                 git pull
@@ -130,7 +130,7 @@ function setup_gateway() {
 
                         cd /develop
                         if [ ! -d "/develop/TarsGateway" ];then                        
-                                git clone https://github.com/TarsCloud/TarsGateway.git          
+                                git clone https://github.com/lsqtzj/TarsGateway.git          
                         else
                                 cd /develop/TarsGateway
                                 git pull
@@ -189,7 +189,7 @@ function setup_dcache() {
                         fi
                         cd /develop
                         if [ ! -d "/develop/DCache" ];then
-                                git clone https://github.com/Tencent/DCache.git     
+                                git clone https://github.com/lsqtzj/DCache.git     
                         else
                                 cd /develop/DCache
                                 git pull
