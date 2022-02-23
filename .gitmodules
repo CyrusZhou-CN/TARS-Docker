@@ -1,0 +1,15 @@
+[submodule "develop/TarsFramework"]
+	path = develop/TarsFramework
+	url = https://github.com/lsqtzj/TarsFramework.git
+[submodule "develop/TarsWeb"]
+	path = develop/TarsWeb
+	url = https://github.com/lsqtzj/TarsWeb.git
+[submodule "develop/DCache"]
+	path = develop/DCache
+	url = https://github.com/lsqtzj/DCache.git
+[submodule "develop/TarsGateway"]
+	path = develop/TarsGateway
+	url = https://github.com/lsqtzj/TarsGateway.git
+[submodule "develop/TarsBenchmark"]
+	path = develop/TarsBenchmark
+	url = https://github.com/lsqtzj/TarsBenchmark.git
