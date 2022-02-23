@@ -16,3 +16,6 @@
 [submodule "develop/CacheDemoServer"]
 	path = develop/CacheDemoServer
 	url = https://github.com/lsqtzj/CacheDemoServer.git
+[submodule "develop/DCacheDemoServer"]
+	path = develop/DCacheDemoServer
+	url = https://github.com/lsqtzj/DCacheDemoServer.git
