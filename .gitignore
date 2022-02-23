@@ -3,6 +3,7 @@
 /develop/TestCmakeHttpServer
 /develop/TarsTalk
 .vscode
+.vs
 build
 # Prerequisites
 *.d
