@@ -6,6 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN yum -y update
 RUN yum -y install unzip gcc gcc-c++ make cmake curl wget mysql mysql-devel mysql-common protobuf-devel protobuf-c zlib-devel openssl openssl-devel
 RUN yum -y install golang 
+RUN yum -y install psmisc
 RUN yum clean all
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh

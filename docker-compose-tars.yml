@@ -77,7 +77,7 @@ services:
   tars-framework:
     image: tarscloud/framework
     restart: always
-    ipc: host
+    ipc: shareable
     container_name: tars-framework
     hostname: tars-framework
     ports:
@@ -111,7 +111,7 @@ services:
   tars-framework-slave:
     image: tarscloud/framework
     restart: always
-    ipc: host
+    ipc: container:tars-framework
     container_name: tars-framework-slave
     hostname: tars-framework-slave
     networks:
@@ -145,7 +145,7 @@ services:
   tars-node:
     image: tarscloud/tars-node
     restart: always
-    ipc: host
+    ipc: container:tars-framework
     container_name: tars-node
     hostname: tars-node
     networks:
@@ -174,7 +174,7 @@ services:
   tars-gateway-server:
     image: tarscloud/tars-node
     restart: always
-    ipc: host
+    ipc: container:tars-framework
     container_name: tars-gateway-server
     hostname: tars-gateway-server
     networks:
@@ -203,7 +203,7 @@ services:
   tars-benchmark-admin-server:
     image: tarscloud/tars-node
     restart: always
-    ipc: host
+    ipc: container:tars-framework
     container_name: tars-benchmark-admin-server
     hostname: tars-benchmark-admin-server
     networks:
@@ -230,7 +230,7 @@ services:
   tars-benchmark-node-server:
     image: tarscloud/tars-node
     restart: always
-    ipc: host
+    ipc: container:tars-framework
     container_name: tars-benchmark-node-server
     hostname: tars-benchmark-node-server
     networks:

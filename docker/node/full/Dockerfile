@@ -43,7 +43,7 @@ COPY --from=node_php /usr/lib64/libwebp.so* /usr/lib64/
 
 RUN mkdir -p /usr/local/php7/etc/php.d
 RUN chmod +x /etc/init.d/php-fpm 
-
+RUN yum -y install psmisc
 RUN yum clean all
 # copy source
 COPY ./docker/node/entrypoint.sh /sbin/

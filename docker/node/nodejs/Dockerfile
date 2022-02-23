@@ -20,6 +20,7 @@ RUN npm install -g npm pm2 n \
     && n install v16.13.0 
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+RUN yum -y install psmisc
 RUN yum clean all
 # copy source
 COPY ./docker/node/entrypoint.sh /sbin/

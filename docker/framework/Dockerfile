@@ -16,8 +16,8 @@ ENV TARS_INSTALL  /usr/local/tars/cpp/deploy
 ARG FRAMEWORK_TAG=master
 ARG WEB_TAG=master
 
-RUN yum install -y protobuf-devel protobuf-c
-RUN yum install -y zlib-devel curl openssl-devel
+RUN yum install -y protobuf-devel protobuf-c zlib-devel curl openssl-devel flex bison
+
 # Get and install nodejs
 RUN npm install -g npm pm2 n \
 	&& n install v16.13.0 
@@ -44,6 +44,7 @@ RUN mkdir -p /data \
 	&& cmake .. && make -j4 && make install \
 	&& cp -rf /tmp/Tars/web /usr/local/tars/cpp/deploy/ \
 	&& rm -rf /tmp 
+RUN yum -y install psmisc
 RUN yum clean all
 RUN	${TARS_INSTALL}/tar-server.sh
 

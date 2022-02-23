@@ -62,6 +62,8 @@ RUN cd /root/ && git clone https://gitee.com/TarsCloud/Tars.git \
 	# Do somethine clean
 	&& cd /root && rm -rf swoole \
 	&& mkdir -p /root/phptars && cp -f /root/Tars/php/tars2php/src/tars2php.php /root/phptars 
+
+RUN yum -y install psmisc
 RUN yum clean all
 # copy source
 COPY ./docker/node/entrypoint.sh /sbin/
