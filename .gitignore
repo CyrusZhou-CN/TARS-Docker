@@ -1,8 +1,9 @@
 /data
 /develop/CacheDemoServer
+/develop/TestCmakeHttpServer
 /develop/TarsTalk
-/.vscode
-
+.vscode
+build
 # Prerequisites
 *.d
 
