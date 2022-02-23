@@ -13,3 +13,6 @@
 [submodule "develop/TarsBenchmark"]
 	path = develop/TarsBenchmark
 	url = https://github.com/lsqtzj/TarsBenchmark.git
+[submodule "develop/CacheDemoServer"]
+	path = develop/CacheDemoServer
+	url = https://github.com/lsqtzj/CacheDemoServer.git
