@@ -11,8 +11,27 @@ docker-compose -f "docker-compose.build.yml" up -d --build
 docker-compose -f "docker-compose-tars.yml" up -d
 ## 管理控制台
 http://localhost:3000/ 首次登录需要设置管理员密码。
-# tars-develop 容器说明
-基于openeuler 系统， 用来测试编译源码，和 develop 目录同步。
+### 碰到的问题
+打开后页面是空白的，解决方法重新编译web
+```
+cd develop\TarsWeb\client
+npm install 
+npm run build 如果出现'.' 不是内部或外部命令，也不是可运行的程序
+可以直接运行 ./node_modules/.bin/vue-cli-service build
+重新 docker-compose -f "docker-compose.build.yml" up -d --build 编译容器
+```
+# 容器说明
+```
+tars-develop                 ： 用来测试编译源码，持久化目录 develop
+tars-mysql                   :  mysql 数据库，持久化目录 data\tars-mysql
+tars-framework               ： tars管理主机，持久化目录 data\tars-framework 
+tars-framework-slave         :  tars备用主机，DCache 主机，持久化目录 data\tars-framework-slave 
+tars-node                    ： tars节点主机，持久化目录 data\tars-node 
+tars-gateway-server          ： TarsGateway api 网关主机，持久化目录 data\tars-gateway-server 
+tars-benchmark-admin-server  ： TarsBenchmark 压力测试管理主机，持久化目录 data\
+tars-benchmark-node-server   ： TarsBenchmark 压力测试节点主机，持久化目录 data\tars-benchmark-node-server
+
+```
 ### 进入容器：
 ```
 docker exec -it tars-develop /bin/bash # 
