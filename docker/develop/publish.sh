@@ -98,10 +98,7 @@ function setup_benchmark() {
                         fi
                         cd /develop
                         if [ ! -d "/develop/TarsBenchmark" ];then
-                                git clone https://github.com/lsqtzj/TarsBenchmark.git                
-                        else
-                                cd /develop/TarsBenchmark
-                                git pull
+                                git clone https://github.com/lsqtzj/TarsBenchmark.git
                         fi
                         cd /develop/TarsBenchmark
                         ./install.sh ${WEBHOST} ${TARS_TOKEN} ${ADMINSIP} ${NODEIP}
@@ -130,10 +127,7 @@ function setup_gateway() {
 
                         cd /develop
                         if [ ! -d "/develop/TarsGateway" ];then                        
-                                git clone https://github.com/lsqtzj/TarsGateway.git          
-                        else
-                                cd /develop/TarsGateway
-                                git pull
+                                git clone https://github.com/lsqtzj/TarsGateway.git
                         fi
                         cd /develop/TarsGateway/install;
                         ./install.sh ${WEBHOST} ${TARS_TOKEN} ${GATEWAY_SERVER_IP} ${MYSQL_HOST} ${MYSQL_PORT} ${MYSQL_USER} ${MYSQL_ROOT_PASSWORD}
@@ -189,10 +183,7 @@ function setup_dcache() {
                         fi
                         cd /develop
                         if [ ! -d "/develop/DCache" ];then
-                                git clone https://github.com/lsqtzj/DCache.git     
-                        else
-                                cd /develop/DCache
-                                git pull
+                                git clone https://github.com/lsqtzj/DCache.git
                         fi
                         mkdir -p /develop/DCache/build
                         cd /develop/DCache/build
