@@ -22,7 +22,7 @@ RUN yum install -y protobuf-devel protobuf-c zlib-devel curl openssl-devel flex 
 RUN npm install -g npm pm2 n \
 	&& n install v16.13.0 
 
-RUN yum clean all
+RUN yum -y install psmisc
 RUN rm -Rf /develop
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
@@ -44,7 +44,7 @@ RUN mkdir -p /data \
 	&& cmake .. && make -j4 && make install \
 	&& cp -rf /tmp/Tars/web /usr/local/tars/cpp/deploy/ \
 	&& rm -rf /tmp 
-RUN yum -y install psmisc
+
 RUN yum clean all
 RUN	${TARS_INSTALL}/tar-server.sh
 
