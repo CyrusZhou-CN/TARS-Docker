@@ -9,9 +9,11 @@ docker-compose -f "docker-compose.yml" up -d
 docker-compose -f "docker-compose.build.yml" up -d --build
 ### 官方Docker
 docker-compose -f "docker-compose-tars.yml" up -d
-## 容器说明
+## 容器介绍
 ![image](https://user-images.githubusercontent.com/4635861/155684352-2ea5e6ba-edba-4566-831c-75b71209c948.png)
 ### 首次开机需要些时间来编译安装DCache TarsGateway TarsBenchmark 项目，可以点击tars-develop容器查看进度
+![image](https://user-images.githubusercontent.com/4635861/155685626-4e58b728-e32b-4821-a884-f5bac1e3f93a.png)
+#### 表示已经启动完成
 ```
 tars-develop                 ： 用来测试编译源码，持久化目录 develop
 tars-mysql                   :  mysql 数据库，持久化目录 data\tars-mysql
