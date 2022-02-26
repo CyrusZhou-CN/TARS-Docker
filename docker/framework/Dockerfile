@@ -41,8 +41,9 @@ RUN mv /tmp/Tars/framework/build/build.sh /tmp/ && mv /tmp/Tars/framework/build/
 RUN mkdir -p /data \
 	&& chmod u+x /tmp/Tars/framework/build/build.sh \
 	&& cd /tmp/Tars/framework/build/ \
-	&& cmake .. && make -j4 && make install \
-	&& cp -rf /tmp/Tars/web /usr/local/tars/cpp/deploy/ \
+	&& cmake .. && make -j4 && make install 
+	
+RUN cp -rf /tmp/Tars/web /usr/local/tars/cpp/deploy/ \
 	&& rm -rf /tmp 
 
 RUN yum clean all
