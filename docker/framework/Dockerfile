@@ -42,7 +42,13 @@ RUN mkdir -p /data \
 	&& chmod u+x /tmp/Tars/framework/build/build.sh \
 	&& cd /tmp/Tars/framework/build/ \
 	&& cmake .. && make -j4 && make install 
-	
+
+RUN curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo \
+	&& rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg && yum -y install yarn
+RUN rm -Rf /tmp/Tars/web/client/node_modules \
+	&& cd /tmp/Tars/web/client && yarn install
+
+RUN cd /tmp/Tars/web/client && export NODE_OPTIONS=--openssl-legacy-provider && yarn build 
 RUN cp -rf /tmp/Tars/web /usr/local/tars/cpp/deploy/ \
 	&& rm -rf /tmp 
 

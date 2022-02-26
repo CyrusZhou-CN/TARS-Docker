@@ -17,7 +17,7 @@ RUN yum -y install mysql mysql-devel mysql-common
 # RUN git config --global --unset http.proxy && \
 #     git config --global --unset https.proxy
 
-RUN git clone https://github.com/lsqtzj/TarsFramework.git --recursive && \
+RUN git clone https://github.com/CyrusZhou-CN/TarsFramework.git --recursive && \
     ## 更新子项目
     ## cd /tmp/TarsFramework && git submodule update --progress --init --recursive --remote --force && \
     cd /tmp/TarsFramework/build && cmake .. && make -j4 && make install

@@ -1,21 +1,21 @@
 [submodule "develop/TarsFramework"]
 	path = develop/TarsFramework
-	url = https://github.com/lsqtzj/TarsFramework.git
+	url = https://github.com/CyrusZhou-CN/TarsFramework.git
 [submodule "develop/TarsWeb"]
 	path = develop/TarsWeb
-	url = https://github.com/lsqtzj/TarsWeb.git
+	url = https://github.com/CyrusZhou-CN/TarsWeb.git
 [submodule "develop/DCache"]
 	path = develop/DCache
-	url = https://github.com/lsqtzj/DCache.git
+	url = https://github.com/CyrusZhou-CN/DCache.git
 [submodule "develop/TarsGateway"]
 	path = develop/TarsGateway
-	url = https://github.com/lsqtzj/TarsGateway.git
+	url = https://github.com/CyrusZhou-CN/TarsGateway.git
 [submodule "develop/TarsBenchmark"]
 	path = develop/TarsBenchmark
-	url = https://github.com/lsqtzj/TarsBenchmark.git
+	url = https://github.com/CyrusZhou-CN/TarsBenchmark.git
 [submodule "develop/CacheDemoServer"]
 	path = develop/CacheDemoServer
-	url = https://github.com/lsqtzj/CacheDemoServer.git
+	url = https://github.com/CyrusZhou-CN/CacheDemoServer.git
 [submodule "develop/DCacheDemoServer"]
 	path = develop/DCacheDemoServer
-	url = https://github.com/lsqtzj/DCacheDemoServer.git
+	url = https://github.com/CyrusZhou-CN/DCacheDemoServer.git
